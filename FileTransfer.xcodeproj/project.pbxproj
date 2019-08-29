@@ -19,12 +19,12 @@
 		11E0711423164C9400C878BC /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E070F323164C9200C878BC /* NetworkReachabilityManager.swift */; };
 		11E0711523164C9400C878BC /* ScanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11E070F523164C9200C878BC /* ScanViewController.xib */; };
 		11E0711623164C9400C878BC /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E070F623164C9200C878BC /* ScanViewController.m */; };
-		11E0711723164C9400C878BC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E070F923164C9200C878BC /* MBProgressHUD.m */; };
 		11E0711823164C9400C878BC /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 11E070FA23164C9200C878BC /* LICENSE */; };
 		11E0711923164C9400C878BC /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 11E070FC23164C9200C878BC /* README.mdown */; };
 		11E0712F2316703300C878BC /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E0712D2316703200C878BC /* ListViewController.swift */; };
 		11E071302316703300C878BC /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E0712E2316703300C878BC /* ListCell.swift */; };
 		11E071342316735500C878BC /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E071332316735500C878BC /* Hud.swift */; };
+		11E07136231798E900C878BC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E07135231798E900C878BC /* MBProgressHUD.m */; };
 		D9AB10AD65E43AD9334060D1 /* Pods_FileTransfer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E6FD64BB5EC056DAF34FD7 /* Pods_FileTransfer.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,7 +44,6 @@
 		11E070F523164C9200C878BC /* ScanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScanViewController.xib; sourceTree = "<group>"; };
 		11E070F623164C9200C878BC /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		11E070F723164C9200C878BC /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
-		11E070F923164C9200C878BC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		11E070FA23164C9200C878BC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		11E070FB23164C9200C878BC /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		11E070FC23164C9200C878BC /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.mdown; sourceTree = "<group>"; };
@@ -52,6 +51,7 @@
 		11E0712D2316703200C878BC /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		11E0712E2316703300C878BC /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		11E071332316735500C878BC /* Hud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
+		11E07135231798E900C878BC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		38E6FD64BB5EC056DAF34FD7 /* Pods_FileTransfer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FileTransfer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D03CFF7D2C30FCC984B771D /* Pods-FileTransfer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileTransfer.release.xcconfig"; path = "Target Support Files/Pods-FileTransfer/Pods-FileTransfer.release.xcconfig"; sourceTree = "<group>"; };
 		90F2C3BA0EEB0DA2BA2CEE4C /* Pods-FileTransfer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileTransfer.debug.xcconfig"; path = "Target Support Files/Pods-FileTransfer/Pods-FileTransfer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 		11E070F823164C9200C878BC /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
-				11E070F923164C9200C878BC /* MBProgressHUD.m */,
+				11E07135231798E900C878BC /* MBProgressHUD.m */,
 				11E070FA23164C9200C878BC /* LICENSE */,
 				11E070FB23164C9200C878BC /* MBProgressHUD.h */,
 				11E070FC23164C9200C878BC /* README.mdown */,
@@ -306,7 +306,7 @@
 				11E070CB231388D900C878BC /* ViewController.swift in Sources */,
 				11E070F02316409900C878BC /* DeviceManager.swift in Sources */,
 				11E0711623164C9400C878BC /* ScanViewController.m in Sources */,
-				11E0711723164C9400C878BC /* MBProgressHUD.m in Sources */,
+				11E07136231798E900C878BC /* MBProgressHUD.m in Sources */,
 				11E070ED2316402B00C878BC /* Counst.swift in Sources */,
 				11E070EB2316222B00C878BC /* File.swift in Sources */,
 				11E070C9231388D900C878BC /* AppDelegate.swift in Sources */,

@@ -10,13 +10,15 @@ import UIKit
 
 var transferFrientId = ""
 var friendState = ""
-class ViewController: UIViewController {
+@available(iOS 11.0, *)
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var qrcodeView: UIImageView!
     var friendView: CommonView!
     var fileView: CommonView!
     var transfile: CommonView!
     var stackView: UIStackView!
+    var imageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,18 +40,26 @@ class ViewController: UIViewController {
         friendView.title.text = "Friend"
         friendView.textFile.placeholder = "Please selected friend."
         friendView.row.image = UIImage(named: "row")
+        friendView.state.text = "None"
+        friendView.state.textColor = UIColor.lightGray
         friendView.button.addTarget(self, action: #selector(showFriends), for: .touchUpInside)
         friendView.subTitle.text = "State"
         
         fileView = CommonView()
         fileView.title.text = "File"
         fileView.subTitle.text = "State"
+        fileView.state.text = "Off"
+        fileView.state.textColor = UIColor.lightGray
         fileView.row.image = UIImage(named: "row")
+        fileView.button.addTarget(self, action: #selector(goPhoto), for: .touchUpInside)
         fileView.textFile.placeholder = "Please selected file."
+
         transfile = CommonView()
         transfile.title.text = ""
         transfile.button.setTitle("TransferFile", for: .normal)
         transfile.button.backgroundColor = UIColor.lightGray
+        transfile.button.isEnabled = false
+        transfile.button.addTarget(self, action: #selector(submit), for: .touchUpInside)
         transfile.button.layer.cornerRadius = 5.0
         transfile.button.layer.masksToBounds = true
 
@@ -63,6 +73,11 @@ class ViewController: UIViewController {
         qrcodeView = UIImageView()
         qrcodeView.backgroundColor = UIColor.red
         self.view.addSubview(qrcodeView)
+
+        imageView = UIImageView()
+        imageView.backgroundColor = UIColor.red
+        self.view.addSubview(imageView)
+
         qrcodeView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(100)
             make.centerX.equalToSuperview()
@@ -74,6 +89,33 @@ class ViewController: UIViewController {
             make.top.equalTo(qrcodeView.snp_bottom).offset(24)
             make.height.equalTo(100 * 3)
         }
+
+        imageView.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp_bottom).offset(12)
+            make.height.width.equalTo(88)
+            make.left.equalTo(stackView)
+        }
+
+    }
+
+    func checkTransferButton() {
+        guard friendView.textFile!.text != nil else {
+            transfile.button.backgroundColor = UIColor.lightGray
+            transfile.button.isEnabled = false
+            return
+        }
+        guard friendView.state.text == "Online" else {
+            transfile.button.backgroundColor = UIColor.lightGray
+            transfile.button.isEnabled = false
+            return
+        }
+        guard imageView.image != nil else {
+            transfile.button.backgroundColor = UIColor.lightGray
+            transfile.button.isEnabled = false
+            return
+        }
+        transfile.button.isEnabled = true
+        transfile.button.backgroundColor = ColorHex("#7f51fc")
     }
 
     func loadMyInfo() {
@@ -95,6 +137,7 @@ class ViewController: UIViewController {
             self.friendView.state.textColor = UIColor.lightGray
             self.friendView.state.text = "Offline"
         }
+        checkTransferButton()
     }
 
     //    MARK: action
@@ -113,6 +156,18 @@ class ViewController: UIViewController {
         self.navigationController?.pushViewController(listVC, animated: true)
     }
 
+    @objc func goPhoto() {
+        let photoPicker = UIImagePickerController()
+        photoPicker.delegate = self
+        photoPicker.allowsEditing = true
+        photoPicker.sourceType = .photoLibrary
+        self.present(photoPicker, animated: true, completion: nil)
+    }
+
+    @objc func submit() {
+        print("触发了提交按钮")
+    }
+
     //MARK: - NSNotification -
     @objc func handleFriendStatusChanged(notif: NSNotification) {
         let friendState = notif.userInfo!["friendState"] as! CarrierConnectionStatus
@@ -120,5 +175,14 @@ class ViewController: UIViewController {
             self.refresh(friendState)
         }
     }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image : UIImage = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
+        fileView.textFile.text = (info[UIImagePickerController.InfoKey.mediaType] as! String)
+        imageView.image = image
+        checkTransferButton()
+        self.dismiss(animated: true, completion: nil)
+    }
+
 }
 

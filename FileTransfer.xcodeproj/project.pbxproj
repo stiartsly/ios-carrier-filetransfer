@@ -25,6 +25,7 @@
 		11E071302316703300C878BC /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E0712E2316703300C878BC /* ListCell.swift */; };
 		11E071342316735500C878BC /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E071332316735500C878BC /* Hud.swift */; };
 		11E07136231798E900C878BC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E07135231798E900C878BC /* MBProgressHUD.m */; };
+		11E0716923192D8B00C878BC /* Timestamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E0716823192D8B00C878BC /* Timestamp.swift */; };
 		D9AB10AD65E43AD9334060D1 /* Pods_FileTransfer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E6FD64BB5EC056DAF34FD7 /* Pods_FileTransfer.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		11E0712E2316703300C878BC /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		11E071332316735500C878BC /* Hud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
 		11E07135231798E900C878BC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		11E0716823192D8B00C878BC /* Timestamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timestamp.swift; sourceTree = "<group>"; };
 		38E6FD64BB5EC056DAF34FD7 /* Pods_FileTransfer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FileTransfer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D03CFF7D2C30FCC984B771D /* Pods-FileTransfer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileTransfer.release.xcconfig"; path = "Target Support Files/Pods-FileTransfer/Pods-FileTransfer.release.xcconfig"; sourceTree = "<group>"; };
 		90F2C3BA0EEB0DA2BA2CEE4C /* Pods-FileTransfer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileTransfer.debug.xcconfig"; path = "Target Support Files/Pods-FileTransfer/Pods-FileTransfer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		11E070EE2316409900C878BC /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				11E0716823192D8B00C878BC /* Timestamp.swift */,
 				11E070DA23138A8300C878BC /* CommonView.swift */,
 				11E070EC2316402B00C878BC /* Counst.swift */,
 				11E070EF2316409900C878BC /* DeviceManager.swift */,
@@ -318,6 +321,7 @@
 				11E0711423164C9400C878BC /* NetworkReachabilityManager.swift in Sources */,
 				11E071302316703300C878BC /* ListCell.swift in Sources */,
 				11E070CB231388D900C878BC /* ViewController.swift in Sources */,
+				11E0716923192D8B00C878BC /* Timestamp.swift in Sources */,
 				11E070F02316409900C878BC /* DeviceManager.swift in Sources */,
 				11E0711623164C9400C878BC /* ScanViewController.m in Sources */,
 				11E07136231798E900C878BC /* MBProgressHUD.m in Sources */,

@@ -25,41 +25,8 @@
 		11E071302316703300C878BC /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E0712E2316703300C878BC /* ListCell.swift */; };
 		11E071342316735500C878BC /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E071332316735500C878BC /* Hud.swift */; };
 		11E07136231798E900C878BC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E07135231798E900C878BC /* MBProgressHUD.m */; };
-		11E0714A2318E8F800C878BC /* ElastosCarrierSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11E071402318E8B500C878BC /* ElastosCarrierSDK.framework */; };
-		11E0714B2318E8F800C878BC /* ElastosCarrierSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11E071402318E8B500C878BC /* ElastosCarrierSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D9AB10AD65E43AD9334060D1 /* Pods_FileTransfer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E6FD64BB5EC056DAF34FD7 /* Pods_FileTransfer.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		11E0713F2318E8B500C878BC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11E071382318E8B500C878BC /* ElastosCarrierSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A3B497B72003736200420421;
-			remoteInfo = ElastosCarrierSDK;
-		};
-		11E071412318E8B500C878BC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11E071382318E8B500C878BC /* ElastosCarrierSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A3B497C02003736300420421;
-			remoteInfo = ElastosCarrierSDKTests;
-		};
-		11E071432318E8B500C878BC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11E071382318E8B500C878BC /* ElastosCarrierSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 116061D72268AB4A00BDCB9F;
-			remoteInfo = ElastosCarrierSDK_macOS;
-		};
-		11E0714C2318E8F800C878BC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 11E071382318E8B500C878BC /* ElastosCarrierSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A3B497B62003736200420421;
-			remoteInfo = ElastosCarrierSDK;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		11E0714E2318E8F800C878BC /* Embed Frameworks */ = {
@@ -68,7 +35,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				11E0714B2318E8F800C878BC /* ElastosCarrierSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -99,7 +65,6 @@
 		11E0712E2316703300C878BC /* ListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		11E071332316735500C878BC /* Hud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
 		11E07135231798E900C878BC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		11E071382318E8B500C878BC /* ElastosCarrierSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ElastosCarrierSDK.xcodeproj; path = ../Elastos.NET.Carrier.Swift.SDK_3/ElastosCarrierSDK.xcodeproj; sourceTree = "<group>"; };
 		38E6FD64BB5EC056DAF34FD7 /* Pods_FileTransfer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FileTransfer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D03CFF7D2C30FCC984B771D /* Pods-FileTransfer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileTransfer.release.xcconfig"; path = "Target Support Files/Pods-FileTransfer/Pods-FileTransfer.release.xcconfig"; sourceTree = "<group>"; };
 		90F2C3BA0EEB0DA2BA2CEE4C /* Pods-FileTransfer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FileTransfer.debug.xcconfig"; path = "Target Support Files/Pods-FileTransfer/Pods-FileTransfer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,7 +75,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11E0714A2318E8F800C878BC /* ElastosCarrierSDK.framework in Frameworks */,
 				D9AB10AD65E43AD9334060D1 /* Pods_FileTransfer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,7 +85,6 @@
 		11E070BC231388D900C878BC = {
 			isa = PBXGroup;
 			children = (
-				11E071382318E8B500C878BC /* ElastosCarrierSDK.xcodeproj */,
 				11E070C7231388D900C878BC /* FileTransfer */,
 				11E070C6231388D900C878BC /* Products */,
 				99987C7FDA8FDC8F2938566E /* Pods */,
@@ -214,16 +177,6 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		11E071392318E8B500C878BC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				11E071402318E8B500C878BC /* ElastosCarrierSDK.framework */,
-				11E071422318E8B500C878BC /* ElastosCarrierSDKTests.xctest */,
-				11E071442318E8B500C878BC /* ElastosCarrierSDK_macOS.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		99987C7FDA8FDC8F2938566E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,7 +211,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				11E0714D2318E8F800C878BC /* PBXTargetDependency */,
 			);
 			name = FileTransfer;
 			productName = FileTransfer;
@@ -291,42 +243,12 @@
 			mainGroup = 11E070BC231388D900C878BC;
 			productRefGroup = 11E070C6231388D900C878BC /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 11E071392318E8B500C878BC /* Products */;
-					ProjectRef = 11E071382318E8B500C878BC /* ElastosCarrierSDK.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				11E070C4231388D900C878BC /* FileTransfer */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		11E071402318E8B500C878BC /* ElastosCarrierSDK.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ElastosCarrierSDK.framework;
-			remoteRef = 11E0713F2318E8B500C878BC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		11E071422318E8B500C878BC /* ElastosCarrierSDKTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ElastosCarrierSDKTests.xctest;
-			remoteRef = 11E071412318E8B500C878BC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		11E071442318E8B500C878BC /* ElastosCarrierSDK_macOS.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ElastosCarrierSDK_macOS.framework;
-			remoteRef = 11E071432318E8B500C878BC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		11E070C3231388D900C878BC /* Resources */ = {
@@ -407,14 +329,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		11E0714D2318E8F800C878BC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ElastosCarrierSDK;
-			targetProxy = 11E0714C2318E8F800C878BC /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		11E070CC231388D900C878BC /* Main.storyboard */ = {

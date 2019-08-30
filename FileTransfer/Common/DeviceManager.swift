@@ -127,12 +127,7 @@ class DeviceManager : NSObject {
 
                 networkManager = nil
                 carrierInst = Carrier.sharedInstance()
-
                 try! carrierInst.start(iterateInterval: 1000)
-
-                //                // filetran
-                //                try CarrierFileTransferManager.initializeSharedInstance(carrier: carrierInst, connectHandler: handle)
-                //                transferManager = CarrierFileTransferManager.sharedInstance()
                 print("carrier started, waiting for ready")
             }
             catch {

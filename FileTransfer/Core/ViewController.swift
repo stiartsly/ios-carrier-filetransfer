@@ -11,7 +11,7 @@ import UIKit
 var transferFrientId = ""
 var friendState = ""
 @available(iOS 11.0, *)
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CarrierFileTransferDelegate {
 
     var qrcodeView: UIImageView!
     var friendView: CommonView!
@@ -19,6 +19,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var transfile: CommonView!
     var stackView: UIStackView!
     var imageView: UIImageView!
+    var sfileTransfer: CarrierFileTransfer!
+    var imgDate: Data!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         creatBarItem()
         loadMyInfo()
         NotificationCenter.default.addObserver(self, selector: #selector(handleFriendStatusChanged(notif:)), name: .friendStatusChanged, object: nil)
+        do {
+            //            try CarrierFileTransferManager.initializeSharedInstance(carrier: DeviceManager.sharedInstance.carrierInst)
+            try CarrierFileTransferManager.initializeSharedInstance(carrier: DeviceManager.sharedInstance.carrierInst, connectHandler: handle)
+        } catch {
+            print(error)
+        }
+
+        let path = NSHomeDirectory() + "/Library/Caches/" + "test.txt"
+        let fileManager = FileManager.default
+        let exist = fileManager.fileExists(atPath: path)
+        if !exist {
+            let str = "测试ipfs"
+            let data = str.data(using: .utf8)
+            fileManager.createFile(atPath: path, contents: nil, attributes: nil)
+            let writeHandle = FileHandle(forWritingAtPath: path)
+            writeHandle?.seek(toFileOffset: 0)
+            writeHandle?.write(data!)
+        }
+
     }
 
     func creatBarItem() {
@@ -166,6 +187,33 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     @objc func submit() {
         print("触发了提交按钮")
+        do {
+            let friendId = friendView.textFile.text ?? ""
+            let fileInfo = CarrierFileTransferInfo()
+            let fileId: String = try CarrierFileTransfer.acquireFileId()
+            fileInfo.fileId = fileId
+            fileInfo.fileName = "test1"
+            imgDate = NSData(data: imageView.image!.jpegData(compressionQuality: 1)!) as Data
+//            imgDate = imageView.image!.pngData()
+//            imgDate = imageView.image!.jpegData(compressionQuality: 0.3)
+            fileInfo.fileSize = UInt64(imgDate.count)
+            sfileTransfer = try CarrierFileTransferManager.sharedInstance()?.createFileTransfer(to: friendId, withFileInfo: fileInfo, delegate: self)
+           try sfileTransfer.sendConnectionRequest()
+        } catch {
+            print(error)
+        }
+    }
+
+    func handle(carrier: Carrier, from: String, info: CarrierFileTransferInfo) {
+        print(from)
+        do {
+            if (sfileTransfer == nil) {
+                sfileTransfer = try CarrierFileTransferManager.sharedInstance()?.createFileTransfer(to: from, withFileInfo: info, delegate: self)
+            }
+            try sfileTransfer!.acceptConnectionRequest()
+        } catch {
+            print(error)
+        }
     }
 
     //MARK: - NSNotification -
@@ -177,12 +225,50 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image : UIImage = info[UIImagePickerController.InfoKey.editedImage] as! UIImage
+        let image : UIImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
         fileView.textFile.text = (info[UIImagePickerController.InfoKey.mediaType] as! String)
         imageView.image = image
         checkTransferButton()
         self.dismiss(animated: true, completion: nil)
     }
 
+    func fileTransferStateDidChange(_ fileTransfer: CarrierFileTransfer, _ newState: CarrierFileTransferConnectionState) {
+        print("fileTransferStateDidChange ====== \(fileTransfer)")
+
+    }
+
+    func didReceiveFileRequest(_ fileTransfer: CarrierFileTransfer, _ fileId: String, _ fileName: String, _ fileSize: UInt64) {
+        print("didReceiveFileRequest ====== \(fileTransfer)")
+        do {
+            try sfileTransfer.sendPullRequest(fileId: fileId, withOffset: 0)
+        } catch {
+            print(error)
+        }
+    }
+
+    func didReceivePullRequest(_ fileTransfer: CarrierFileTransfer, _ fileId: String, _ offset: UInt64) {
+        print("didReceivePullRequest ====== \(fileTransfer)")
+        do {
+//            let path = NSHomeDirectory() + "/Library/Caches/" + "test.txt"
+//            let readHandle = FileHandle(forReadingAtPath: path)
+//            readHandle?.seek(toFileOffset: 0)
+//            let data = readHandle?.readDataToEndOfFile()
+            try sfileTransfer.sendData(fileId: fileId, withData: imgDate)
+        } catch {
+            print("didReceivePullRequest: error \(error)")
+        }
+    }
+
+    func didReceiveFileTransferData(_ fileTransfer: CarrierFileTransfer, _ fileId: String, _ data: Data) -> Bool {
+        print("fileTransferStateDidChange ====== \(fileTransfer)")
+        DispatchQueue.main.sync {
+            let imge = UIImage(data: data)
+            imageView.image = imge
+        }
+        return true
+    }
+
 }
+
+
 

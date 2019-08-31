@@ -18,7 +18,7 @@ var sendPath = NSHomeDirectory() + "/Library/Caches/" + "send_\(time)"
 var receivePath = NSHomeDirectory() + "/Library/Caches/" + "receive_\(time)"
 
 @available(iOS 11.0, *)
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CarrierFileTransferDelegate {
+class ViewController: UIViewController {
 
     var qrcodeView: UIImageView!
     var friendView: CommonView!
@@ -223,6 +223,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.refresh(friendState)
         }
     }
+}
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+@available(iOS 11.0, *)
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image : UIImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
@@ -231,6 +236,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         checkTransferButton()
         self.dismiss(animated: true, completion: nil)
     }
+}
+
+// MARK: - CarrierFileTransferDelegate
+@available(iOS 11.0, *)
+extension ViewController: CarrierFileTransferDelegate {
 
     func fileTransferStateDidChange(_ fileTransfer: CarrierFileTransfer, _ newState: CarrierFileTransferConnectionState) {
         print("fileTransferStateDidChange ====== \(fileTransfer)")
@@ -299,6 +309,5 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
 }
-
 
 

@@ -135,30 +135,6 @@ class DeviceManager : NSObject {
             }
         }
     }
-
-    func creatCarrierGroup() {
-        do {
-            if carrierInst.isReady() {
-                self.carrierGroup = try carrierInst.createGroup(withDelegate: self)
-                NotificationCenter.default.post(name: .didcreatGroupSuccee, object: nil)
-                print("======= Create carrierGroup success",carrierGroup as Any)
-            }
-            else {
-                print("==== Carrier is not ready, Invoke after carrier ready")
-            }
-        } catch {
-            print(error)
-        }
-    }
-
-    //    func handle(carrier: Carrier, from: String, info: CarrierFileTransferInfo) {
-    //        do {
-    ////            try fileTransfer = DeviceManager.sharedInstance.transferManager.createFileTransfer(to: from, withFileInfo: info, delegate: self)
-    ////            try fileTransfer?.acceptConnectionRequest()
-    //        } catch {
-    //        }
-    //    }
-
 }
 
 // MARK: - CarrierDelegate
@@ -253,25 +229,4 @@ extension DeviceManager : CarrierDelegate
 
 }
 
-// MARK: - GroupDelegate
-extension DeviceManager: CarrierGroupDelegate {
-
-    func groupDidConnect(_ group: CarrierGroup) {
-
-        print(group)
-    }
-
-    func groupPeerListDidChange(_ group: CarrierGroup) {
-        print(group)
-    }
-
-    func groupPeerNameDidChange(_ group: CarrierGroup, _ from: String, _ newName: String) {
-        print(group)
-    }
-
-    func groupTitleDidChange(_ group: CarrierGroup, _ from: String, _ newTitle: String) {
-        print(group)
-    }
-
-}
 

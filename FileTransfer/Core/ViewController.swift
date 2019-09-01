@@ -258,30 +258,35 @@ extension ViewController: CarrierFileTransferDelegate {
 
     func didReceivePullRequest(_ fileTransfer: CarrierFileTransfer, _ fileId: String, _ offset: UInt64) {
         print("didReceivePullRequest ====== \(fileTransfer)")
-        do {
-            let nsize = 2048
-            var count = ( imgDate.count / 2048 )
-            let remainder = imgDate.count % 2048
-            if remainder != 0 {
-                count += 1
-            }
-            let readHandle = FileHandle(forReadingAtPath: sendPath)
-            for index in 0 ..< count {
-                let offset = index * nsize
-                readHandle?.seek(toFileOffset: UInt64(offset))
-                var data = Data()
-                if index == count - 1 {
-                    data = (readHandle?.readDataToEndOfFile())!
+        DispatchQueue.global().async {
+            do {
+                let nsize = 2048
+                var count = ( self.imgDate.count / nsize )
+                let remainder = self.imgDate.count % nsize
+                if remainder != 0 {
+                    count += 1
                 }
-                else {
-                    data = (readHandle?.readData(ofLength: nsize))!
+                var index = 0
+                let readHandle = FileHandle(forReadingAtPath: sendPath)
+                while index < count {
+
+                    let offset = index * nsize
+                    readHandle?.seek(toFileOffset: UInt64(offset))
+                    var data = Data()
+                    if index == count - 1 {
+                        data = (readHandle?.readDataToEndOfFile())!
+                    }
+                    else {
+                        data = (readHandle?.readData(ofLength: nsize))!
+                    }
+                    try self.sfileTransfer.sendData(fileId: fileId, withData: data)
+                    index += 1
                 }
-                try sfileTransfer.sendData(fileId: fileId, withData: data)
-                print("count ==== \(count), index ==== \(index)")
+            } catch {
+                print("didReceivePullRequest: error \(error)")
             }
-        } catch {
-            print("didReceivePullRequest: error \(error)")
         }
+
     }
 
     func didReceiveFileTransferData(_ fileTransfer: CarrierFileTransfer, _ fileId: String, _ data: Data) -> Bool {
@@ -296,6 +301,7 @@ extension ViewController: CarrierFileTransferDelegate {
         writeHandle?.write(data)
         receiveoffset += data.count
         if receiveoffset == receiveinfo.fileSize {
+//            sfileTransfer.close()
             DispatchQueue.main.sync {
                 let readHandle = FileHandle(forReadingAtPath: receivePath)
                 readHandle!.seek(toFileOffset: 0)

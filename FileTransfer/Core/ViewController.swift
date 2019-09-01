@@ -85,7 +85,7 @@ class ViewController: UIViewController {
         self.view.addSubview(qrcodeView)
 
         showImage = UIImageView()
-        showImage.backgroundColor = UIColor.red
+        showImage.backgroundColor = UIColor.white
         self.view.addSubview(showImage)
 
         qrcodeView.snp.makeConstraints { make in
@@ -274,6 +274,7 @@ extension ViewController: CarrierFileTransferDelegate {
                     }
                 }
             } catch {
+                fileTransfer.close()
                 print("didReceivePullRequest: error \(error)")
             }
         }

@@ -11,11 +11,7 @@ import UIKit
 var transferFrientId = ""
 var friendState = ""
 var receiveoffset = 0
-var receiveData = Data()
 var receiveinfo = CarrierFileTransferInfo()
-let time = Timestamp.getTimeAtNow()
-var sendPath = NSHomeDirectory() + "/Library/Caches/" + "send_\(time)"
-var receivePath = NSHomeDirectory() + "/Library/Caches/" + "receive_\(time)"
 
 @available(iOS 11.0, *)
 class ViewController: UIViewController {
@@ -179,22 +175,14 @@ class ViewController: UIViewController {
     }
 
     @objc func submit() {
-        print("触发了提交按钮")
         do {
             let friendId = friendView.textFile.text ?? ""
             let fileInfo = CarrierFileTransferInfo()
             let fileId: String = try CarrierFileTransfer.acquireFileId()
             fileInfo.fileId = fileId
-            fileInfo.fileName = "test1"
+            fileInfo.fileName = "test"
             imgDate = NSData(data: showImage.image!.jpegData(compressionQuality: 1)!) as Data
-            let fileManager = FileManager.default
-            let exist = fileManager.fileExists(atPath: sendPath)
-            if !exist {
-                fileManager.createFile(atPath: sendPath, contents: nil, attributes: nil)
-                let writeHandle = FileHandle(forWritingAtPath: sendPath)
-                writeHandle?.seek(toFileOffset: 0)
-                writeHandle?.write(imgDate!)
-            }
+            CacheHelper.saveCache(sendPath, imgDate)
             fileInfo.fileSize = UInt64(imgDate.count)
             sfileTransfer = try CarrierFileTransferManager.sharedInstance()?.createFileTransfer(to: friendId, withFileInfo: fileInfo, delegate: self)
            try sfileTransfer.sendConnectionRequest()
@@ -244,7 +232,10 @@ extension ViewController: CarrierFileTransferDelegate {
 
     func fileTransferStateDidChange(_ fileTransfer: CarrierFileTransfer, _ newState: CarrierFileTransferConnectionState) {
         print("fileTransferStateDidChange ====== \(fileTransfer)")
-
+        DispatchQueue.main.async {
+            self.fileView.state.textColor = UIColor.green
+            self.fileView.state.text = newState.description
+        }
     }
 
     func didReceiveFileRequest(_ fileTransfer: CarrierFileTransfer, _ fileId: String, _ fileName: String, _ fileSize: UInt64) {
@@ -266,49 +257,49 @@ extension ViewController: CarrierFileTransferDelegate {
                 if remainder != 0 {
                     count += 1
                 }
-                var index = 0
-                let readHandle = FileHandle(forReadingAtPath: sendPath)
-                while index < count {
-
+                for index in 0..<count {
                     let offset = index * nsize
-                    readHandle?.seek(toFileOffset: UInt64(offset))
-                    var data = Data()
-                    if index == count - 1 {
-                        data = (readHandle?.readDataToEndOfFile())!
-                    }
-                    else {
-                        data = (readHandle?.readData(ofLength: nsize))!
-                    }
+                    let data = CacheHelper.readCache(sendPath, nsize, index: index, count: count)
                     try self.sfileTransfer.sendData(fileId: fileId, withData: data)
-                    index += 1
+                    DispatchQueue.main.async {
+                        let precent = Float(offset) / Float(self.imgDate.count) * 100
+                        self.transfile.subTitle.text = "Sending"
+                        self.transfile.state.text = "Size: \(offset), Percent: \(String(format: "%.0f", precent))%"
+                        if offset >= self.imgDate.count {
+                            self.transfile.subTitle.text = "Sended"
+                            self.transfile.state.text = "Size: \(self.imgDate.count), Percent: 100%"
+                            fileTransfer.close()
+                            CacheHelper.clearCache(sendPath)
+                        }
+                    }
                 }
             } catch {
                 print("didReceivePullRequest: error \(error)")
             }
         }
-
     }
 
     func didReceiveFileTransferData(_ fileTransfer: CarrierFileTransfer, _ fileId: String, _ data: Data) -> Bool {
         print("fileTransferStateDidChange ====== \(fileTransfer)")
-        let fileManager = FileManager.default
-        let exist = fileManager.fileExists(atPath: receivePath)
-        if !exist {
-            fileManager.createFile(atPath: receivePath, contents: nil, attributes: nil)
-        }
-        let writeHandle = FileHandle(forWritingAtPath: receivePath)
-        writeHandle?.seek(toFileOffset: UInt64(receiveoffset))
-        writeHandle?.write(data)
+        
+        CacheHelper.saveCache(receivePath, offset: receiveoffset, data)
         receiveoffset += data.count
+        DispatchQueue.main.async {
+            let precent = Float(receiveoffset) / Float(receiveinfo.fileSize) * 100
+            self.transfile.subTitle.text = "Receiving"
+            self.transfile.state.text = "Size: \(receiveoffset), Percent: \(String(format: "%.0f", precent))%"
+        }
         if receiveoffset == receiveinfo.fileSize {
-//            sfileTransfer.close()
-            DispatchQueue.main.sync {
-                let readHandle = FileHandle(forReadingAtPath: receivePath)
-                readHandle!.seek(toFileOffset: 0)
-                receiveData = (readHandle?.readDataToEndOfFile())!
-                let imge = UIImage(data: receiveData)
+            DispatchQueue.main.async {
+                Hud.show(self.view, "Transfer finsh", 0.5)
+                self.transfile.subTitle.text = "Received"
+                self.transfile.state.text = "Size: \(receiveoffset), Percent: 100%"
+                let data = CacheHelper.readCache(receivePath)
+                let imge = UIImage(data: data)
                 UIImageWriteToSavedPhotosAlbum(imge!, nil, nil, nil)
-                showImage.image = imge
+                self.showImage.image = imge
+                fileTransfer.close()
+                CacheHelper.clearCache(receivePath)
             }
         }
         return true

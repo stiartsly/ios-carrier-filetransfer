@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		116D5AD5231B5CF200AEF9A2 /* ElastosCarrierSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11E07186231B5B0700C878BC /* ElastosCarrierSDK.framework */; };
 		116D5AD6231B5CF200AEF9A2 /* ElastosCarrierSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11E07186231B5B0700C878BC /* ElastosCarrierSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		116D5ADA231BDC3E00AEF9A2 /* CacheHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116D5AD9231BDC3E00AEF9A2 /* CacheHelper.swift */; };
 		11E070C9231388D900C878BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E070C8231388D900C878BC /* AppDelegate.swift */; };
 		11E070CB231388D900C878BC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E070CA231388D900C878BC /* ViewController.swift */; };
 		11E070CE231388D900C878BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11E070CC231388D900C878BC /* Main.storyboard */; };
@@ -77,6 +78,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		116D5AD9231BDC3E00AEF9A2 /* CacheHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheHelper.swift; sourceTree = "<group>"; };
 		11E070C5231388D900C878BC /* FileTransfer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileTransfer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11E070C8231388D900C878BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		11E070CA231388D900C878BC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 		11E070EE2316409900C878BC /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				116D5AD9231BDC3E00AEF9A2 /* CacheHelper.swift */,
 				11E0716823192D8B00C878BC /* Timestamp.swift */,
 				11E070DA23138A8300C878BC /* CommonView.swift */,
 				11E070EC2316402B00C878BC /* Counst.swift */,
@@ -396,6 +399,7 @@
 			files = (
 				11E0712F2316703300C878BC /* ListViewController.swift in Sources */,
 				11E071342316735500C878BC /* Hud.swift in Sources */,
+				116D5ADA231BDC3E00AEF9A2 /* CacheHelper.swift in Sources */,
 				11E0711423164C9400C878BC /* NetworkReachabilityManager.swift in Sources */,
 				11E071302316703300C878BC /* ListCell.swift in Sources */,
 				11E070CB231388D900C878BC /* ViewController.swift in Sources */,

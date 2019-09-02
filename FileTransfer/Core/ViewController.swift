@@ -123,6 +123,7 @@ class ViewController: UIViewController {
             transfile.button.isEnabled = false
             return
         }
+        fileView.state.text = "Off"
         transfile.button.isEnabled = true
         transfile.button.backgroundColor = ColorHex("#7f51fc")
     }
@@ -186,6 +187,7 @@ class ViewController: UIViewController {
             sfileTransfer = try CarrierFileTransferManager.sharedInstance()?.createFileTransfer(to: friendId, withFileInfo: fileInfo, delegate: self)
            try sfileTransfer.sendConnectionRequest()
         } catch {
+            sfileTransfer = nil
             print(error)
         }
     }
@@ -196,9 +198,10 @@ class ViewController: UIViewController {
             receiveinfo = info
             if (sfileTransfer == nil) {
                 sfileTransfer = try CarrierFileTransferManager.sharedInstance()?.createFileTransfer(to: from, withFileInfo: info, delegate: self)
+                try sfileTransfer!.acceptConnectionRequest()
             }
-            try sfileTransfer!.acceptConnectionRequest()
         } catch {
+            self.sfileTransfer = nil
             print(error)
         }
     }
@@ -234,6 +237,15 @@ extension ViewController: CarrierFileTransferDelegate {
         DispatchQueue.main.async {
             self.fileView.state.textColor = UIColor.green
             self.fileView.state.text = newState.description
+            if newState == .Connected || newState == .Connecting {
+                self.transfile.button.isEnabled = false
+            }else {
+                self.transfile.button.isEnabled = true
+            }
+            guard newState != .Error else {
+                self.sfileTransfer = nil
+                return
+            }
         }
     }
 
@@ -243,6 +255,8 @@ extension ViewController: CarrierFileTransferDelegate {
             try sfileTransfer.sendPullRequest(fileId: fileId, withOffset: 0)
         } catch {
             print(error)
+            fileTransfer.close()
+            self.sfileTransfer = nil
         }
     }
 
@@ -265,16 +279,18 @@ extension ViewController: CarrierFileTransferDelegate {
                         self.transfile.subTitle.text = "Sending"
                         self.transfile.state.text = "Size: \(offset), Percent: \(String(format: "%.0f", precent))%"
                         if index == count - 1 {
+                            Hud.show(self.view, "Transfer finsh", 0.5)
                             self.transfile.subTitle.text = "Sended"
                             self.transfile.state.text = "Size: \(self.imgDate.count), Percent: 100%"
                             fileTransfer.close()
-                            CacheHelper.clearCache(sendPath)
                             self.sfileTransfer = nil
+                            CacheHelper.clearCache(sendPath)
                         }
                     }
                 }
             } catch {
                 fileTransfer.close()
+                self.sfileTransfer = nil
                 print("didReceivePullRequest: error \(error)")
             }
         }

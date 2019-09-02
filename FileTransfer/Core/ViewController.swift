@@ -25,6 +25,10 @@ class ViewController: UIViewController {
     var sfileTransfer: CarrierFileTransfer!
     var imgDate: Data!
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         creatUI()

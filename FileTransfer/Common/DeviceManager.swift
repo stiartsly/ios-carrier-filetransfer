@@ -3,7 +3,7 @@ import AVFoundation
 import MediaPlayer
 
 extension Notification.Name {
-    static let selfInfoChanged = Notification.Name("didReceiveData")
+    static let didBecomeReady = Notification.Name("didBecomeReady")
     static let deviceStatusChanged = Notification.Name("completedLengthyDownload")
     static let friendStatusChanged = Notification.Name("friendStatusChanged")
     static let friendInfoChanged = Notification.Name("friendInfoChanged")
@@ -120,14 +120,13 @@ extension DeviceManager : CarrierDelegate
             myInfo.name = UIDevice.current.name
             try? carrier.setSelfUserInfo(myInfo)
         }
-
         try? _ = CarrierSessionManager.initializeSharedInstance(carrier: carrier, sessionRequestHandler: { (carrier, frome, sdp) in
         })
+        NotificationCenter.default.post(name: .didBecomeReady, object: nil)
     }
-    
+
     public func selfUserInfoDidChange(_ carrier: Carrier,
                                       _ newInfo: CarrierUserInfo) {
-        NotificationCenter.default.post(name: .selfInfoChanged, object: nil)
     }
     
     public func didReceiveFriendsList(_ carrier: Carrier,

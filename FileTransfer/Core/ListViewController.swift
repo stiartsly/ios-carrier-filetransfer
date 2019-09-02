@@ -16,12 +16,16 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     typealias Closure = (CarrierFriendInfo) -> Void
     var closure: Closure!
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         creatUI()
         let item=UIBarButtonItem(title: "确定", style: UIBarButtonItem.Style.plain, target: self, action: #selector(sureAction))
+        NotificationCenter.default.addObserver(self, selector: #selector(handledidBecomeReady), name: .didBecomeReady, object: nil)
         item.tintColor = UIColor.black
         self.navigationItem.rightBarButtonItem = item
     }
@@ -29,15 +33,22 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard DeviceManager.sharedInstance.carrierInst.isReady() else {
-            Hud.show(self.view, "Is not ready", 0.5)
+            Hud.show(self.view, "Is not ready", 1)
             return
         }
         do {
             try dataSource = DeviceManager.sharedInstance.carrierInst.getFriends()
-            mainTableView.reloadData()
+            DispatchQueue.main.async {
+                if self.dataSource.count == 0 {
+                    Hud.show(self.view, "No friends, Please add friends.", 1)
+                }
+                self.mainTableView.reloadData()
+            }
         } catch {
             print(error)
-            Hud.show(self.view, error as! String, 0.5)
+            DispatchQueue.main.async {
+                Hud.show(self.view, error as! String, 1)
+            }
         }
     }
 
@@ -67,6 +78,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.closure = closure
     }
 
+    //MARK: - Button Action -
     @objc func sureAction() {
         var selectIndexs = [Int]()
         if let selectItem = mainTableView.indexPathsForSelectedRows {
@@ -81,6 +93,24 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         self.navigationController?.popViewController(animated: true)
+    }
+
+    //MARK: - NSNotification -
+    @objc func handledidBecomeReady(notif: NSNotification) {
+        do {
+            try dataSource = DeviceManager.sharedInstance.carrierInst.getFriends()
+            DispatchQueue.main.async {
+                if self.dataSource.count == 0 {
+                    Hud.show(self.view, "No friends, Please add friends.", 1)
+                }
+                self.mainTableView.reloadData()
+            }
+        } catch {
+            print(error)
+            DispatchQueue.main.async {
+                Hud.show(self.view, error as! String, 1)
+            }
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

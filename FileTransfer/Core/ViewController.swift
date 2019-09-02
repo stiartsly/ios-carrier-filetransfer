@@ -105,7 +105,6 @@ class ViewController: UIViewController {
             make.height.width.equalTo(88)
             make.left.equalTo(stackView)
         }
-
     }
 
     func checkTransferButton() {
@@ -265,11 +264,12 @@ extension ViewController: CarrierFileTransferDelegate {
                         let precent = Float(offset) / Float(self.imgDate.count) * 100
                         self.transfile.subTitle.text = "Sending"
                         self.transfile.state.text = "Size: \(offset), Percent: \(String(format: "%.0f", precent))%"
-                        if offset >= self.imgDate.count {
+                        if index == count - 1 {
                             self.transfile.subTitle.text = "Sended"
                             self.transfile.state.text = "Size: \(self.imgDate.count), Percent: 100%"
                             fileTransfer.close()
                             CacheHelper.clearCache(sendPath)
+                            self.sfileTransfer = nil
                         }
                     }
                 }
@@ -300,6 +300,10 @@ extension ViewController: CarrierFileTransferDelegate {
                 UIImageWriteToSavedPhotosAlbum(imge!, nil, nil, nil)
                 self.showImage.image = imge
                 fileTransfer.close()
+                self.sfileTransfer = nil
+                transferFrientId = ""
+                friendState = ""
+                receiveoffset = 0
                 CacheHelper.clearCache(receivePath)
             }
         }

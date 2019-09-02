@@ -4,15 +4,11 @@ import MediaPlayer
 
 extension Notification.Name {
     static let selfInfoChanged = Notification.Name("didReceiveData")
-    static let deviceListChanged = Notification.Name("didCompleteTask")
     static let deviceStatusChanged = Notification.Name("completedLengthyDownload")
     static let friendStatusChanged = Notification.Name("friendStatusChanged")
     static let friendInfoChanged = Notification.Name("friendInfoChanged")
     static let friendAdded = Notification.Name("friendAdded")
     static let acceptFriend = Notification.Name("acceptFriend")
-    static let didReceiveFriendMessage = Notification.Name("didReceiveFriendMessage")
-    static let didcreatGroupSuccee = Notification.Name("didcreatGroupSuccee")
-    static let showAddFriendOrCreateGroup = Notification.Name("showAddFriendOrCreateGroup")
 
 }
 class DeviceManager : NSObject {
@@ -24,9 +20,6 @@ class DeviceManager : NSObject {
     var status = CarrierConnectionStatus.Disconnected
     @objc(carrierInst)
     var carrierInst: ElastosCarrierSDK.Carrier!
-    //    var transferManager: ElastosCarrierSDK.CarrierFileTransferManager!
-    //    var fileTransfer: CarrierFileTransfer?
-
     fileprivate var networkManager : NetworkReachabilityManager?
 
     var carrierGroup: CarrierGroup?
@@ -66,61 +59,35 @@ class DeviceManager : NSObject {
                 let options = CarrierOptions()
                 options.bootstrapNodes = [BootstrapNode]()
                 options.hivebootstrapNodes = [HiveBootstrapNode]()
+                let bootstrapNodes = [["ipv4": "13.58.208.50", "port": "33445", "publicKey": "89vny8MrKdDKs7Uta9RdVmspPjnRMdwMmaiEW27pZ7gh"],
+                                      ["ipv4": "18.216.102.47", "port": "33445", "publicKey": "G5z8MqiNDFTadFUPfMdYsYtkUDbX5mNCMVHMZtsCnFeb"],
+                                      ["ipv4": "18.216.6.197", "port": "33445", "publicKey": "H8sqhRrQuJZ6iLtP2wanxt4LzdNrN2NNFnpPdq1uJ9n2"],
+                                      ["ipv4": "54.223.36.193", "port": "33445", "publicKey": "5tuHgK1Q4CYf4K5PutsEPK5E3Z7cbtEBdx7LwmdzqXHL"],
+                                      ["ipv4": "52.83.191.228", "port": "33445", "publicKey": "3khtxZo89SBScAMaHhTvD68pPHiKxgZT6hTCSZZVgNEm"]]
 
-                let bootstrapNode = BootstrapNode()
-                bootstrapNode.ipv4 = "13.58.208.50"
-                bootstrapNode.port = "33445"
-                bootstrapNode.publicKey = "89vny8MrKdDKs7Uta9RdVmspPjnRMdwMmaiEW27pZ7gh"
-                options.bootstrapNodes?.append(bootstrapNode)
+                let hivestrapNodes = [["ipv4": "52.83.159.189", "port": "9095"],
+                                      ["ipv4": "52.83.119.110", "port": "9095"],
+                                      ["ipv4": "3.16.202.140", "port": "9095"],
+                                      ["ipv4": "18.219.53.133", "port": "9095"],
+                                      ["ipv4": "18.217.147.205", "port": "9095"]]
 
-                bootstrapNode.ipv4 = "18.216.102.47"
-                bootstrapNode.port = "33445"
-                bootstrapNode.publicKey = "G5z8MqiNDFTadFUPfMdYsYtkUDbX5mNCMVHMZtsCnFeb"
-                options.bootstrapNodes?.append(bootstrapNode)
+                bootstrapNodes.enumerated().forEach { (index, obj) in
+                    let bootstrapNode = BootstrapNode()
+                    bootstrapNode.ipv4 = obj["ipv4"]
+                    bootstrapNode.port = obj["port"]
+                    bootstrapNode.publicKey = obj["publicKey"]
+                    options.bootstrapNodes?.append(bootstrapNode)
+                }
 
-                bootstrapNode.ipv4 = "18.216.6.197"
-                bootstrapNode.port = "33445"
-                bootstrapNode.publicKey = "H8sqhRrQuJZ6iLtP2wanxt4LzdNrN2NNFnpPdq1uJ9n2"
-                options.bootstrapNodes?.append(bootstrapNode)
-
-                bootstrapNode.ipv4 = "54.223.36.193"
-                bootstrapNode.port = "33445"
-                bootstrapNode.publicKey = "5tuHgK1Q4CYf4K5PutsEPK5E3Z7cbtEBdx7LwmdzqXHL"
-                options.bootstrapNodes?.append(bootstrapNode)
-
-                bootstrapNode.ipv4 = "52.83.191.228"
-                bootstrapNode.port = "33445"
-                bootstrapNode.publicKey = "3khtxZo89SBScAMaHhTvD68pPHiKxgZT6hTCSZZVgNEm"
-                options.bootstrapNodes?.append(bootstrapNode)
-
-                let hivebootstrapNode0 = HiveBootstrapNode()
-                hivebootstrapNode0.ipv4 = "52.83.159.189"
-                hivebootstrapNode0.port = "9095"
-                options.hivebootstrapNodes?.append(hivebootstrapNode0)
-
-                let hivebootstrapNode1 = HiveBootstrapNode()
-                hivebootstrapNode1.ipv4 = "52.83.119.110"
-                hivebootstrapNode1.port = "9095"
-                options.hivebootstrapNodes?.append(hivebootstrapNode1)
-
-                let hivebootstrapNode2 = HiveBootstrapNode()
-                hivebootstrapNode2.ipv4 = "3.16.202.140"
-                hivebootstrapNode2.port = "9095"
-                options.hivebootstrapNodes?.append(hivebootstrapNode2)
-
-                let hivebootstrapNode3 = HiveBootstrapNode()
-                hivebootstrapNode3.ipv4 = "18.219.53.133"
-                hivebootstrapNode3.port = "9095"
-                options.hivebootstrapNodes?.append(hivebootstrapNode3)
-
-                let hivebootstrapNode4 = HiveBootstrapNode()
-                hivebootstrapNode4.ipv4 = "18.217.147.205"
-                hivebootstrapNode4.port = "9095"
-                options.hivebootstrapNodes?.append(hivebootstrapNode4)
+                hivestrapNodes.enumerated().forEach { (index, obj) in
+                    let hivebootstrapNode = HiveBootstrapNode()
+                    hivebootstrapNode.ipv4 = obj["ipv4"]
+                    hivebootstrapNode.port = obj["port"]
+                    options.hivebootstrapNodes?.append(hivebootstrapNode)
+                }
 
                 options.udpEnabled = true
                 options.persistentLocation = carrierDirectory
-
                 try Carrier.initializeSharedInstance(options: options, delegate: self)
                 print("carrier instance created")
 

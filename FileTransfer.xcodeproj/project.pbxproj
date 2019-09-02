@@ -86,6 +86,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		116D5ADB231CBD7900AEF9A2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				116D5AD9231BDC3E00AEF9A2 /* CacheHelper.swift */,
+				11E0716823192D8B00C878BC /* Timestamp.swift */,
+				11E070EC2316402B00C878BC /* Counst.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		11E070BC231388D900C878BC = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +117,7 @@
 		11E070C7231388D900C878BC /* FileTransfer */ = {
 			isa = PBXGroup;
 			children = (
+				116D5ADB231CBD7900AEF9A2 /* Utils */,
 				11E070F123164C9200C878BC /* 3rd */,
 				11E070EE2316409900C878BC /* Common */,
 				11E0712B2316537C00C878BC /* Core */,
@@ -124,10 +135,7 @@
 		11E070EE2316409900C878BC /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				116D5AD9231BDC3E00AEF9A2 /* CacheHelper.swift */,
-				11E0716823192D8B00C878BC /* Timestamp.swift */,
 				11E070DA23138A8300C878BC /* CommonView.swift */,
-				11E070EC2316402B00C878BC /* Counst.swift */,
 				11E070EF2316409900C878BC /* DeviceManager.swift */,
 				11E071332316735500C878BC /* Hud.swift */,
 			);

@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '10.0'
 
 target 'FileTransfer' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -9,7 +9,6 @@ target 'FileTransfer' do
         pod 'SnapKit', '~> 4.0.0'
         pod 'QRCode', '~> 2.0'
         pod 'FTLinearActivityIndicator'
-        pod 'ElastosCarrierSDK', '5.4.0'
-        
+        pod 'ElastosCarrierSDK', '5.4.1'
 
 end

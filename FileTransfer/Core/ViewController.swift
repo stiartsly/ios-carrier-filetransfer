@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     var showImage: UIImageView!
     var sfileTransfer: CarrierFileTransfer!
     var imgDate: Data!
-
+    var carrierFileTransferM: CarrierFileTransferManager!
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         loadMyInfo()
         NotificationCenter.default.addObserver(self, selector: #selector(handleFriendStatusChanged(notif:)), name: .friendStatusChanged, object: nil)
         do {
-            try CarrierFileTransferManager.initializeSharedInstance(carrier: DeviceManager.sharedInstance.carrierInst, connectHandler: handle)
+            carrierFileTransferM = try CarrierFileTransferManager.createInstance(carrier: DeviceManager.sharedInstance.carrierInst, connectHandler: handle)
         } catch {
             print(error)
         }
@@ -188,7 +188,10 @@ class ViewController: UIViewController {
             imgDate = NSData(data: showImage.image!.jpegData(compressionQuality: 1)!) as Data
             CacheHelper.saveCache(sendPath, imgDate)
             fileInfo.fileSize = UInt64(imgDate.count)
-            sfileTransfer = try CarrierFileTransferManager.sharedInstance()?.createFileTransfer(to: friendId, withFileInfo: fileInfo, delegate: self)
+            sfileTransfer = try carrierFileTransferM.createFileTransfer(to: friendId, withFileInfo: fileInfo, delegate: self)
+           let idstr = try sfileTransfer.acquireFileName(by: fileId)
+            print(idstr)
+            let namestr = try sfileTransfer.acquireFileId(by: "test")
            try sfileTransfer.sendConnectionRequest()
         } catch {
             sfileTransfer = nil
@@ -201,7 +204,7 @@ class ViewController: UIViewController {
         do {
             receiveinfo = info
             if (sfileTransfer == nil) {
-                sfileTransfer = try CarrierFileTransferManager.sharedInstance()?.createFileTransfer(to: from, withFileInfo: info, delegate: self)
+                sfileTransfer = try carrierFileTransferM.createFileTransfer(to: from, withFileInfo: info, delegate: self)
                 try sfileTransfer!.acceptConnectionRequest()
             }
         } catch {

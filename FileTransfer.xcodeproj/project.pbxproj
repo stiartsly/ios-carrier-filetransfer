@@ -492,6 +492,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FileTransfer",
+					"$(PROJECT_DIR)/FileTransfer/3rd",
 				);
 				INFOPLIST_FILE = FileTransfer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -518,6 +519,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/FileTransfer",
+					"$(PROJECT_DIR)/FileTransfer/3rd",
 				);
 				INFOPLIST_FILE = FileTransfer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

@@ -58,18 +58,16 @@ class DeviceManager : NSObject {
 
                 let options = CarrierOptions()
                 options.bootstrapNodes = [BootstrapNode]()
-                options.hivebootstrapNodes = [HiveBootstrapNode]()
+                options.expressNodes = [ExpressNode]()
                 let bootstrapNodes = [["ipv4": "13.58.208.50", "port": "33445", "publicKey": "89vny8MrKdDKs7Uta9RdVmspPjnRMdwMmaiEW27pZ7gh"],
                                       ["ipv4": "18.216.102.47", "port": "33445", "publicKey": "G5z8MqiNDFTadFUPfMdYsYtkUDbX5mNCMVHMZtsCnFeb"],
                                       ["ipv4": "18.216.6.197", "port": "33445", "publicKey": "H8sqhRrQuJZ6iLtP2wanxt4LzdNrN2NNFnpPdq1uJ9n2"],
                                       ["ipv4": "54.223.36.193", "port": "33445", "publicKey": "5tuHgK1Q4CYf4K5PutsEPK5E3Z7cbtEBdx7LwmdzqXHL"],
                                       ["ipv4": "52.83.191.228", "port": "33445", "publicKey": "3khtxZo89SBScAMaHhTvD68pPHiKxgZT6hTCSZZVgNEm"]]
 
-                let hivestrapNodes = [["ipv4": "52.83.159.189", "port": "9095"],
-                                      ["ipv4": "52.83.119.110", "port": "9095"],
-                                      ["ipv4": "3.16.202.140", "port": "9095"],
-                                      ["ipv4": "18.219.53.133", "port": "9095"],
-                                      ["ipv4": "18.217.147.205", "port": "9095"]]
+                let expressNodes = [["ipv4": "ece00.trinity-tech.io", "port": "443", "publicKey": "FyTt6cgnoN1eAMfmTRJCaX2UoN6ojAgCimQEbv1bruy9"],
+                                      ["ipv4": "ece01.trinity-tech.io", "port": "443", "publicKey": "FyTt6cgnoN1eAMfmTRJCaX2UoN6ojAgCimQEbv1bruy9"],
+                                      ["ipv4": "ece01.trinity-tech.cn", "port": "443", "publicKey": "FyTt6cgnoN1eAMfmTRJCaX2UoN6ojAgCimQEbv1bruy9"]]
 
                 bootstrapNodes.enumerated().forEach { (index, obj) in
                     let bootstrapNode = BootstrapNode()
@@ -79,11 +77,12 @@ class DeviceManager : NSObject {
                     options.bootstrapNodes?.append(bootstrapNode)
                 }
 
-                hivestrapNodes.enumerated().forEach { (index, obj) in
-                    let hivebootstrapNode = HiveBootstrapNode()
-                    hivebootstrapNode.ipv4 = obj["ipv4"]
-                    hivebootstrapNode.port = obj["port"]
-                    options.hivebootstrapNodes?.append(hivebootstrapNode)
+                expressNodes.enumerated().forEach { (index, obj) in
+                    let expressNode = ExpressNode()
+                    expressNode.ipv4 = obj["ipv4"]
+                    expressNode.port = obj["port"]
+                    expressNode.publicKey = obj["publicKey"]
+                    options.expressNodes?.append(expressNode)
                 }
 
                 options.udpEnabled = true

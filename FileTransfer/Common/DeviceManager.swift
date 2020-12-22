@@ -23,6 +23,7 @@ class DeviceManager : NSObject {
     fileprivate var networkManager : NetworkReachabilityManager?
 
     var carrierGroup: CarrierGroup?
+    var session: CarrierSessionManager?
 
     override init() {
     }
@@ -118,7 +119,10 @@ extension DeviceManager : CarrierDelegate
             myInfo.name = UIDevice.current.name
             try? carrier.setSelfUserInfo(myInfo)
         }
-        _ = try? CarrierSessionManager.createInstance(carrier: carrier, sessionRequestHandler: { (carrier, frome, adp) in
+        session = try? CarrierSessionManager.createInstance(carrier: carrier, sessionRequestHandler: { (carrier, frome, adp) in
+            print(carrier)
+            print(carrier)
+            print(adp)
         })
         NotificationCenter.default.post(name: .didBecomeReady, object: nil)
     }

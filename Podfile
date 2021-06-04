@@ -10,5 +10,5 @@ target 'FileTransfer' do
         pod 'QRCode', '~> 2.0'
         pod 'FTLinearActivityIndicator'
 
-        pod 'ElastosCarrierSDK', '6.0.1'
+        pod 'ElastosCarrierSDK', '6.0.3'
 end
